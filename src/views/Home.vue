@@ -3,10 +3,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Home',
-  components: {
-  },
-};
+<script setup>
+import { onMounted } from 'vue';
+import usePosts from '@/hooks/usePosts';
+
+onMounted(() => {
+  console.log(usePosts('aww'));
+});
 </script>

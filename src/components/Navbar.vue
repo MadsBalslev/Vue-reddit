@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper indigo">
       <a href="#" class="brand-logo">Reddit</a>
       <form class="right">
         <div class="input-field">
