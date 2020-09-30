@@ -1,17 +1,19 @@
 export default {
-  async getPosts(subreddit) {
-    const url = `https://www.reddit.com/r/${subreddit}.json`;
+  async getPosts(subreddit, params) {
+    const urlParams = new URLSearchParams(params);
+    const url = `https://www.reddit.com/${subreddit}.json?${urlParams}`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        accept: 'application/json',
+      },
+    });
     const data = await response.json();
-
-    // Only return the data if it's good
     if (response.ok) {
       return data;
     }
 
-    // If the data is not good handle the error
-    const error = new Error(data.message || `Error getting data for r/${subreddit}`);
+    const error = new Error(data.message || 'Error getting data');
     error.response = data;
     throw error;
   },

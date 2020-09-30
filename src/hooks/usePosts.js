@@ -1,34 +1,28 @@
 import { reactive, watch } from 'vue';
 import API from '@/utils/API';
 
-export default function usePosts(subreddit) {
-  // Set initial postState
+export default function usePosts(subreddit, params = {}) {
   const postState = reactive({
     loading: false,
-    data: [],
     error: '',
+    data: [],
   });
 
-  // Get the posts from specifies subreddit
-  async function getData() {
+  async function loadData() {
     try {
-      // Make sure postState is reset
       postState.loading = true;
       postState.error = '';
       postState.data = [];
 
-      // Get the posts using the API
-      const response = await API.getPosts(subreddit);
+      const response = await API.getPosts(subreddit, params);
       postState.data = response.data.children;
     } catch (error) {
-      postState.error = error;
+      postState.error = error.message || `Error getting posts from r/${subreddit}`;
     } finally {
       postState.loading = false;
     }
   }
 
-  // Watch for changes in subreddit to get new data everytime it changes
-  watch(() => subreddit, getData, { immediate: true });
-
+  watch(() => subreddit, loadData, { immediate: true });
   return postState;
 }

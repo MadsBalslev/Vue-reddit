@@ -1,13 +1,21 @@
 <template>
-  <div class="home">
+  <div class="container">
+    <Subreddit :name="name.subreddit" />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import usePosts from '@/hooks/usePosts';
+import Subreddit from '@/components/Subreddit';
+import store from '@/store/index';
 
-onMounted(() => {
-  console.log(usePosts('aww'));
-});
+export default {
+  components: {
+    Subreddit,
+  },
+};
+
+export const name = store.state;
 </script>
+
+<style lang="scss" scoped>
+</style>
